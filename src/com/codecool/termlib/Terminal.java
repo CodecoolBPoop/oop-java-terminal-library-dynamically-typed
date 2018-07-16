@@ -30,6 +30,7 @@ public class Terminal {
      * (i.e.: underlined, dim, bright) to the terminal defaults.
      */
     public void resetStyle() {
+    	command(CONTROL_CODE + "0" + STYLE);
     }
 
     /**
@@ -38,6 +39,7 @@ public class Terminal {
      * Might reset cursor position.
      */
     public void clearScreen() {
+    	command(CONTROL_CODE + CLEAR);
     }
 
     /**
@@ -50,6 +52,7 @@ public class Terminal {
      * @param y Row number.
      */
     public void moveTo(Integer x, Integer y) {
+    	command(CONTROL_CODE + x + ";" + y + MOVE);
     }
 
     /**
@@ -60,6 +63,7 @@ public class Terminal {
      * @param color The color to set.
      */
     public void setColor(Color color) {
+    	command(CONTROL_CODE + 3 + color.ordinal() + STYLE);
     }
 
     /**
@@ -70,6 +74,7 @@ public class Terminal {
      * @param color The background color to set.
      */
     public void setBgColor(Color color) {
+    	command(CONTROL_CODE + 4 + color.ordinal() + STYLE);
     }
 
     /**
@@ -80,6 +85,7 @@ public class Terminal {
      * well.
      */
     public void setUnderline() {
+    	command(CONTROL_CODE + 4 + STYLE);
     }
 
     /**
@@ -92,6 +98,7 @@ public class Terminal {
      * @param amount Step the cursor this many times.
      */
     public void moveCursor(Direction direction, Integer amount) {
+    	command(CONTROL_CODE + amount + (char)(direction.ordinal() + 65));
     }
 
     /**
@@ -105,6 +112,8 @@ public class Terminal {
      * position.
      */
     public void setChar(char c) {
+    	command("" + c);
+    	moveCursor(Direction.BACKWARD, 1);
     }
 
     /**
@@ -116,5 +125,9 @@ public class Terminal {
      * @param commandString The unique part of a command sequence.
      */
     private void command(String commandString) {
+    	System.out.print(commandString);
+    }
+
+    public static void main(String[] args) {
     }
 }
