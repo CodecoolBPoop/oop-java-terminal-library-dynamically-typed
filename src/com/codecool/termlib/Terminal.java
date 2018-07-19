@@ -23,6 +23,8 @@ public class Terminal {
      */
     private static final String STYLE = "m";
 
+    private static final String CURSOR = "?25";
+
     /**
      * Reset printing rules in effect to terminal defaults.
      *
@@ -30,7 +32,7 @@ public class Terminal {
      * (i.e.: underlined, dim, bright) to the terminal defaults.
      */
     public void resetStyle() {
-    	command(CONTROL_CODE + "0" + STYLE);
+    	command(CONTROL_CODE + 0 + STYLE);
     }
 
     /**
@@ -40,6 +42,14 @@ public class Terminal {
      */
     public void clearScreen() {
     	command(CONTROL_CODE + CLEAR);
+    }
+
+    public void hideCursor() {
+    	command(CONTROL_CODE + CURSOR + "l");
+    }
+
+    public void showCursor() {
+    	command(CONTROL_CODE + CURSOR + "h");
     }
 
     /**
@@ -75,6 +85,10 @@ public class Terminal {
      */
     public void setBgColor(Color color) {
     	command(CONTROL_CODE + 4 + color.ordinal() + STYLE);
+    }
+
+    public void setAttribute(Attribute attrib) {
+    	command(CONTROL_CODE + attrib.ordinal() + STYLE);
     }
 
     /**
